@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fußball-Streaming 2026</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap">
+  <style>
+    /* Single-theme: bold magenta sports broadcast aesthetic */
+    :root {
+      --bg-dark: #1a0a14;
+      --bg-gradient-start: #2d0a1e;
+      --bg-gradient-mid: #8c0050;
+      --bg-gradient-end: #d4006a;
+      --fg: #ffffff;
+      --fg-muted: rgba(255,255,255,0.75);
+      --accent: #ff0080;
+      --accent-light: #ff3da0;
+      --card-bg: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.15);
+      --font-display: 'Oswald', Impact, sans-serif;
+      --font-body: 'Open Sans', system-ui, sans-serif;
+      color-scheme: dark;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg-dark);
+      background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 40%, var(--bg-gradient-end) 100%);
+      background-attachment: fixed;
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding-inline: 16px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding-block: 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 2rem 0 1rem;
+    }
+
+    .hero-kicker {
+      font-family: var(--font-display);
+      font-size: clamp(0.75rem, 2vw, 0.875rem);
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.25rem, 7vw, 4rem);
+      line-height: 1.05;
+      margin: 0;
+      text-transform: uppercase;
+      text-wrap: balance;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--fg-muted);
+      margin-top: 0.75rem;
+      line-height: 1.4;
+    }
+
+    /* Video section */
+    .video-section {
+      position: relative;
+    }
+
+    .video-wrapper {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow:
+        0 4px 24px rgba(0,0,0,0.4),
+        0 0 60px rgba(212,0,106,0.2);
+      border: 1px solid var(--card-border);
+      background: #000;
+    }
+
+    .video-wrapper video {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .video-label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Info cards */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .info-card h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 0.75rem;
+      color: var(--accent-light);
+    }
+
+    .info-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--fg-muted);
+    }
+
+    /* Pricing section */
+    .pricing {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pricing-heading {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      text-transform: uppercase;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .pricing-columns {
+      max-width: 420px;
+    }
+
+    .pricing-category {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .pricing-category h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 1rem;
+      color: var(--fg);
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .tier {
+      padding: 0.6rem 0;
+    }
+
+    .tier + .tier {
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .tier-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--accent-light);
+    }
+
+    .tier-price {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--fg);
+      margin-left: 0.25rem;
+    }
+
+    .tier-desc {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      margin-top: 0.2rem;
+      line-height: 1.4;
+    }
+
+    /* Features list */
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .features li {
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .features li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-logo {
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+    }
+
+    .footer-note {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.5rem;
+    }
+
+    /* Soccer ball decoration */
+    .deco {
+      position: fixed;
+      bottom: -80px;
+      right: -80px;
+      width: 260px;
+      height: 260px;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @media (max-width: 600px) {
+      .page { padding-block: 1.25rem 2rem; gap: 2rem; }
+      .hero { padding: 1rem 0 0; }
+      .deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="hero-kicker">Regionalliga Nordost</div>
+    <h1>Anpfiff zum Livesport</h1>
+    <p class="hero-sub">freiepresse.de überträgt die Regionalliga Nordost &ndash; live, digital und für alle.</p>
+  </header>
+
+  <section class="video-section">
+    <div class="video-wrapper">
+      <span class="video-label">L-Banner Vorschau</span>
+      <video id="mainVideo" controls playsinline preload="metadata">
+        <source src="assets/video.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <section class="info-grid">
+    <div class="info-card">
+      <h3>Liveübertragung</h3>
+      <p>Live-Bild inklusive Kommentar von unserem Partner OSTSPORT.TV. Jede Partie wird mit mehreren Kameras in TV-Qualität übertragen &ndash; Zeitlupen, Interviews in der Halbzeitpause und nach dem Abpfiff inklusive.</p>
+    </div>
+    <div class="info-card">
+      <h3>Ihre Zielgruppe</h3>
+      <p>Direkte Ansprache der sportaffinen Zielgruppe. Über 47.000 E-Paper-Abonnenten können das Streaming als Upgrade buchen. Neukunden schließen unser Sport-Abo ab.</p>
+    </div>
+    <div class="info-card">
+      <h3>Banner-Einblendungen</h3>
+      <ul class="features">
+        <li>3&times; pro Halbzeit, bei mehreren Sponsoren in Rotation</li>
+        <li>Streifen-Banner oder L-Banner möglich</li>
+        <li>Werbemittelerstellung inklusive</li>
+        <li>Pre- oder Midroll-Werbeclips auf Anfrage</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <h2 class="pricing-heading">Unser Angebot</h2>
+    <div class="pricing-columns">
+      <div class="pricing-category">
+        <h3>Staffel-Pakete</h3>
+        <div class="tier">
+          <span class="tier-name">3er Paket</span>
+          <span class="tier-price">1.000 &euro;</span>
+          <div class="tier-desc">3 Spiele der Regionalliga Nordost</div>
+        </div>
+        <div class="tier">
+          <span class="tier-name">5er Paket</span>
+          <span class="tier-price">1.500 &euro;</span>
+          <div class="tier-desc">5 Spiele der Regionalliga Nordost</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-logo">
+      <img src="assets/logo.png" alt="Next Level Media" width="100" height="100" style="border-radius:8px;">
+    </div>
+    <div class="footer-brand">powered by Freie Presse Mediengruppe</div>
+    <p class="footer-note">Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer.</p>
+  </footer>
+
+</div>
+
+<svg class="deco" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#fff" stroke-width="3"/>
+  <path d="M100 5 L120 40 L160 40 L130 65 L140 100 L100 80 L60 100 L70 65 L40 40 L80 40Z" fill="#fff" opacity="0.5"/>
+  <circle cx="100" cy="100" r="30" fill="none" stroke="#fff" stroke-width="2"/>
+</svg>
+
+</body>
+</html>
